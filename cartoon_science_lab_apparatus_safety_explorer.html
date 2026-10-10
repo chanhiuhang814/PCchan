@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartoon Science Lab: Apparatus & Safety Explorer</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Fredoka & Nunito -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@500;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Nunito', 'sans-serif'],
+                        fredoka: ['Fredoka', 'cursive'],
+                    },
+                    colors: {
+                        lab: {
+                            blue: '#3b82f6',
+                            purple: '#8b5cf6',
+                            pink: '#ec4899',
+                            yellow: '#f59e0b',
+                            green: '#10b981',
+                            bg: '#f0f9ff',
+                            card: '#ffffff'
+                        }
+                    },
+                    boxShadow: {
+                        'cartoon': '0 8px 0 0 rgba(0,0,0,0.15)',
+                        'cartoon-sm': '0 4px 0 0 rgba(0,0,0,0.12)',
+                        'cartoon-lg': '0 12px 0 0 rgba(0,0,0,0.18)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #e0f2fe;
+            background-image: radial-gradient(#bae6fd 2px, transparent 2px);
+            background-size: 24px 24px;
+            user-select: none;
+        }
+
+        .font-fredoka {
+            font-family: 'Fredoka', cursive;
+        }
+
+        .btn-cartoon {
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .btn-cartoon:hover {
+            transform: translateY(-3px);
+        }
+        .btn-cartoon:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 0 rgba(0,0,0,0.2) !important;
+        }
+
+        .float-anim {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(2deg); }
+        }
+
+        .pulse-subtle {
+            animation: pulseSubtle 2s ease-in-out infinite;
+        }
+        @keyframes pulseSubtle {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+
+        /* Certificate Print Styling */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printable-certificate, #printable-certificate * {
+                visibility: visible;
+            }
+            #printable-certificate {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                margin: 0;
+                padding: 20px;
+                box-shadow: none !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e0f2fe;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #93c5fd;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #60a5fa;
+        }
+    </style>
+</head>
+<body class="min-h-screen text-slate-800 flex flex-col justify-between p-2 md:p-6 relative">
+
+    <!-- SVG Vector Repository for Apparatus and Safety Icons -->
+    <svg style="display: none;">
+        <!-- BEAKER -->
+        <g id="svg-beaker">
+            <path d="M 25 20 L 75 20 L 75 28 L 70 28 L 70 80 C 70 85 65 90 60 90 L 40 90 C 35 90 30 85 30 80 L 30 28 L 25 28 Z" fill="#e2e8f0" stroke="#334155" stroke-width="4" stroke-linejoin="round"/>
+            <path d="M 32 45 Q 50 40 68 45 L 68 78 C 68 83 63 87 58 87 L 42 87 C 37 87 32 83 32 78 Z" fill="#38bdf8" opacity="0.8"/>
+            <circle cx="45" cy="65" r="3" fill="#ffffff" opacity="0.7"/>
+            <circle cx="55" cy="55" r="4" fill="#ffffff" opacity="0.7"/>
+            <line x1="30" y1="40" x2="40" y2="40" stroke="#475569" stroke-width="3" stroke-linecap="round"/>
+            <line x1="30" y1="55" x2="45" y2="55" stroke="#475569" stroke-width="3" stroke-linecap="round"/>
+            <line x1="30" y1="70" x2="40" y2="70" stroke="#475569" stroke-width="3" stroke-linecap="round"/>
+            <!-- Cartoon Face -->
+            <circle cx="43" cy="60" r="2.5" fill="#1e293b"/>
+            <circle cx="57" cy="60" r="2.5" fill="#1e293b"/>
+            <path d="M 47 67 Q 50 70 53 67" stroke="#1e293b" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        </g>
+
+        <!-- ERLENMEYER FLASK -->
+        <g id="svg-flask">
+            <path d="M 42 15 L 58 15 L 58 38 L 80 75 C 84 82 78 90 70 90 L 30 90 C 22 90 16 82 20 75 L 42 38 Z" fill="#f1f5f9" stroke="#334155" stroke-width="4" stroke-linejoin="round"/>
+            <path d="M 28 62 L 72 62 L 75 76 C 77 82 72 87 66 87 L 34 87 C 28 87 23 82 25 76 Z" fill="#a855f7" opacity="0.8"/>
+            <circle cx="42" cy="75" r="3.5" fill="#ffffff" opacity="0.8"/>
+            <circle cx="58" cy="70" r="4.5" fill="#ffffff" opacity="0.8"/>
+            <!-- Cute Face -->
+            <circle cx="44" cy="72" r="2" fill="#ffffff"/>
+            <circle cx="56" cy="72" r="2" fill="#ffffff"/>
+            <path d="M 47 78 Q 50 81 53 78" stroke="#ffffff" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </g>
+
+        <!-- GRADUATED CYLINDER -->
+        <g id="svg-cylinder">
+            <rect x="20" y="85" width="60" height="8" rx="3" fill="#94a3b8" stroke="#334155" stroke-width="3"/>
+            <path d="M 40 15 L 60 15 L 60 85 L 40 85 Z" fill="#f8fafc" stroke="#334155" stroke-width="4"/>
+            <path d="M 42 35 L 58 35 L 58 83 L 42 83 Z" fill="#facc15" opacity="0.85"/>
+            <line x1="40" y1="25" x2="50" y2="25" stroke="#334155" stroke-width="2.5"/>
+            <line x1="40" y1="35" x2="48" y2="35" stroke="#334155" stroke-width="2"/>
+            <line x1="40" y1="45" x2="52" y2="45" stroke="#334155" stroke-width="2.5"/>
+            <line x1="40" y1="55" x2="48" y2="55" stroke="#334155" stroke-width="2"/>
+            <line x1="40" y1="65" x2="52" y2="65" stroke="#334155" stroke-width="2.5"/>
+            <line x1="40" y1="75" x2="48" y2="75" stroke="#334155" stroke-width="2"/>
+        </g>
+
+        <!-- BUNSEN BURNER -->
+        <g id="svg-burner">
+            <!-- Base -->
+            <rect x="25" y="80" width="50" height="12" rx="4" fill="#64748b" stroke="#1e293b" stroke-width="3"/>
+            <rect x="42" y="45" width="16" height="36" fill="#94a3b8" stroke="#1e293b" stroke-width="3"/>
+            <circle cx="50" cy="72" r="4" fill="#334155"/>
+            <!-- Flame -->
+            <path d="M 50 10 Q 65 28 58 45 L 42 45 Q 35 28 50 10 Z" fill="#f97316" stroke="#ea580c" stroke-width="2"/>
+            <path d="M 50 20 Q 58 32 54 45 L 46 45 Q 42 32 50 20 Z" fill="#facc15"/>
+            <path d="M 50 30 Q 54 38 52 45 L 48 45 Q 46 38 50 30 Z" fill="#38bdf8"/>
+        </g>
+
+        <!-- TEST TUBE RACK -->
+        <g id="svg-testtubes">
+            <!-- Wooden Rack -->
+            <rect x="15" y="60" width="70" height="8" fill="#d97706" rx="2" stroke="#78350f" stroke-width="2"/>
+            <rect x="15" y="85" width="70" height="8" fill="#b45309" rx="2" stroke="#78350f" stroke-width="2"/>
+            <rect x="20" y="68" width="6" height="17" fill="#d97706"/>
+            <rect x="74" y="68" width="6" height="17" fill="#d97706"/>
+            <!-- Test Tubes -->
+            <!-- Tube 1 -->
+            <path d="M 30 25 L 30 75 C 30 80 38 80 38 75 L 38 25 Z" fill="#f1f5f9" stroke="#334155" stroke-width="2.5"/>
+            <path d="M 31 45 L 37 45 L 37 73 C 37 77 31 77 31 73 Z" fill="#ef4444" opacity="0.85"/>
+            <!-- Tube 2 -->
+            <path d="M 46 20 L 46 75 C 46 80 54 80 54 75 L 54 20 Z" fill="#f1f5f9" stroke="#334155" stroke-width="2.5"/>
+            <path d="M 47 38 L 53 38 L 53 73 C 53 77 47 77 47 73 Z" fill="#10b981" opacity="0.85"/>
+            <!-- Tube 3 -->
+            <path d="M 62 28 L 62 75 C 62 80 70 80 70 75 L 70 28 Z" fill="#f1f5f9" stroke="#334155" stroke-width="2.5"/>
+            <path d="M 63 50 L 69 50 L 69 73 C 69 77 63 77 63 73 Z" fill="#3b82f6" opacity="0.85"/>
+        </g>
+
+        <!-- PIPETTE -->
+        <g id="svg-pipette">
+            <!-- Rubber bulb -->
+            <path d="M 40 12 Q 35 25 42 32 L 58 32 Q 65 25 60 12 Q 50 5 40 12 Z" fill="#ef4444" stroke="#991b1b" stroke-width="3"/>
+            <!-- Glass Stem -->
+            <path d="M 44 32 L 44 80 L 50 92 L 56 80 L 56 32 Z" fill="#f8fafc" stroke="#334155" stroke-width="3"/>
+            <path d="M 46 60 L 54 60 L 51 88 L 49 88 Z" fill="#3b82f6" opacity="0.8"/>
+            <circle cx="50" cy="95" r="2.5" fill="#3b82f6"/>
+        </g>
+
+        <!-- TONGS -->
+        <g id="svg-tongs">
+            <path d="M 25 85 C 20 70 30 55 45 45 L 40 15" stroke="#64748b" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <path d="M 75 85 C 80 70 70 55 55 45 L 60 15" stroke="#475569" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <circle cx="50" cy="47" r="4" fill="#1e293b"/>
+            <!-- Handles -->
+            <circle cx="37" cy="15" r="7" stroke="#64748b" stroke-width="4" fill="none"/>
+            <circle cx="63" cy="15" r="7" stroke="#475569" stroke-width="4" fill="none"/>
+        </g>
+
+        <!-- SAFETY GOGGLES -->
+        <g id="svg-goggles">
+            <rect x="15" y="32" width="32" height="36" rx="10" fill="#38bdf8" fill-opacity="0.5" stroke="#0284c7" stroke-width="4"/>
+            <rect x="53" y="32" width="32" height="36" rx="10" fill="#38bdf8" fill-opacity="0.5" stroke="#0284c7" stroke-width="4"/>
+            <path d="M 47 42 Q 50 38 53 42" stroke="#0284c7" stroke-width="4" fill="none"/>
+            <path d="M 8 48 L 15 48 M 85 48 L 92 48" stroke="#0284c7" stroke-width="5" stroke-linecap="round"/>
+            <!-- Highlights -->
+            <line x1="20" y1="38" x2="30" y2="58" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+            <line x1="58" y1="38" x2="68" y2="58" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+        </g>
+
+        <!-- THERMOMETER -->
+        <g id="svg-thermometer">
+            <rect x="42" y="10" width="16" height="65" rx="8" fill="#f8fafc" stroke="#334155" stroke-width="3"/>
+            <circle cx="50" cy="80" r="12" fill="#ef4444" stroke="#334155" stroke-width="3"/>
+            <rect x="47" y="25" width="6" height="52" fill="#ef4444"/>
+            <line x1="58" y1="20" x2="63" y2="20" stroke="#334155" stroke-width="2"/>
+            <line x1="58" y1="30" x2="63" y2="30" stroke="#334155" stroke-width="2"/>
+            <line x1="58" y1="40" x2="63" y2="40" stroke="#334155" stroke-width="2"/>
+            <line x1="58" y1="50" x2="63" y2="50" stroke="#334155" stroke-width="2"/>
+            <line x1="58" y1="60" x2="63" y2="60" stroke="#334155" stroke-width="2"/>
+        </g>
+
+        <!-- MICROSCOPE -->
+        <g id="svg-microscope">
+            <!-- Base & Arm -->
+            <path d="M 25 85 L 75 85 Q 70 70 55 70 L 55 40 Q 70 30 65 15 L 45 15 L 45 35 L 35 35" fill="none" stroke="#334155" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+            <!-- Eyepiece -->
+            <rect x="58" y="12" width="12" height="20" transform="rotate(-20 64 22)" fill="#06b6d4" stroke="#0e7490" stroke-width="2"/>
+            <!-- Stage -->
+            <rect x="30" y="55" width="35" height="6" fill="#1e293b" rx="2"/>
+            <!-- Lens Objective -->
+            <rect x="42" y="38" width="10" height="15" fill="#f59e0b" stroke="#b45309" stroke-width="2"/>
+        </g>
+
+        <!-- FUNNEL -->
+        <g id="svg-funnel">
+            <path d="M 20 20 L 80 20 L 56 55 L 56 85 L 44 85 L 44 55 Z" fill="#facc15" stroke="#ca8a04" stroke-width="4" stroke-linejoin="round"/>
+            <ellipse cx="50" cy="20" rx="30" ry="6" fill="#fef08a" stroke="#ca8a04" stroke-width="3"/>
+            <!-- Liquid drop -->
+            <path d="M 50 88 C 47 88 45 92 50 97 C 55 92 53 88 50 88 Z" fill="#38bdf8"/>
+        </g>
+
+        <!-- ELECTRONIC BALANCE -->
+        <g id="svg-balance">
+            <rect x="15" y="45" width="70" height="42" rx="8" fill="#e2e8f0" stroke="#334155" stroke-width="4"/>
+            <!-- Pan -->
+            <rect x="25" y="35" width="50" height="10" rx="3" fill="#94a3b8" stroke="#334155" stroke-width="3"/>
+            <rect x="42" y="40" width="16" height="6" fill="#64748b"/>
+            <!-- Screen -->
+            <rect x="30" y="58" width="40" height="20" rx="4" fill="#1e293b"/>
+            <text x="50" y="73" font-family="monospace" font-size="12" fill="#22c55e" text-anchor="middle" font-weight="bold">25.00g</text>
+        </g>
+
+        <!-- HAZARD SYMBOLS (GHS CARTOON STYLED) -->
+        <!-- FLAMMABLE -->
+        <g id="hazard-flammable">
+            <polygon points="50,5 95,50 50,95 5,50" fill="#ffffff" stroke="#ef4444" stroke-width="8" stroke-linejoin="round"/>
+            <path d="M 50 25 Q 65 45 58 75 Q 50 80 42 75 Q 32 60 45 45 C 40 52 38 60 42 68 Q 50 42 50 25 Z" fill="#ef4444"/>
+            <path d="M 50 45 Q 58 58 54 73 Q 50 76 46 73 Q 40 62 48 55 C 45 60 44 65 46 70 Q 50 55 50 45 Z" fill="#facc15"/>
+        </g>
+
+        <!-- CORROSIVE -->
+        <g id="hazard-corrosive">
+            <polygon points="50,5 95,50 50,95 5,50" fill="#ffffff" stroke="#ef4444" stroke-width="8" stroke-linejoin="round"/>
+            <!-- Tubes -->
+            <line x1="30" y1="28" x2="42" y2="40" stroke="#1e293b" stroke-width="4" stroke-linecap="round"/>
+            <line x1="70" y1="28" x2="58" y2="40" stroke="#1e293b" stroke-width="4" stroke-linecap="round"/>
+            <!-- Drops -->
+            <circle cx="43" cy="46" r="2.5" fill="#1e293b"/>
+            <circle cx="57" cy="46" r="2.5" fill="#1e293b"/>
+            <!-- Surface & Hand -->
+            <rect x="25" y="62" width="22" height="6" fill="#1e293b" rx="2"/>
+            <path d="M 55 62 L 75 62 L 72 72 L 58 72 Z" fill="#1e293b"/>
+            <!-- Corrosion holes -->
+            <circle cx="36" cy="62" r="3" fill="#ffffff"/>
+            <circle cx="64" cy="62" r="3" fill="#ffffff"/>
+        </g>
+
+        <!-- TOXIC / POISON -->
+        <g id="hazard-toxic">
+            <polygon points="50,5 95,50 50,95 5,50" fill="#ffffff" stroke="#ef4444" stroke-width="8" stroke-linejoin="round"/>
+            <!-- Skull -->
+            <circle cx="50" cy="42" r="16" fill="#1e293b"/>
+            <rect x="43" y="52" width="14" height="10" rx="2" fill="#1e293b"/>
+            <circle cx="43" cy="42" r="4" fill="#ffffff"/>
+            <circle cx="57" cy="42" r="4" fill="#ffffff"/>
+            <path d="M 45 58 L 45 62 M 50 58 L 50 62 M 55 58 L 55 62" stroke="#ffffff" stroke-width="2"/>
+            <!-- Crossbones -->
+            <path d="M 28 68 L 72 32 M 28 32 L 72 68" stroke="#1e293b" stroke-width="5" stroke-linecap="round"/>
+        </g>
+
+        <!-- EXPLOSIVE -->
+        <g id="hazard-explosive">
+            <polygon points="50,5 95,50 50,95 5,50" fill="#ffffff" stroke="#ef4444" stroke-width="8" stroke-linejoin="round"/>
+            <circle cx="50" cy="58" r="12" fill="#1e293b"/>
+            <path d="M 50 46 Q 58 35 68 30" stroke="#1e293b" stroke-width="3" fill="none"/>
+            <!-- Rays -->
+            <path d="M 50 30 L 50 20 M 30 40 L 20 32 M 70 40 L 80 32 M 32 65 L 20 70 M 68 65 L 80 70 M 50 76 L 50 84" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round"/>
+        </g>
+
+        <!-- BIOHAZARD -->
+        <g id="hazard-biohazard">
+            <polygon points="50,5 95,50 50,95 5,50" fill="#ffffff" stroke="#ef4444" stroke-width="8" stroke-linejoin="round"/>
+            <circle cx="50" cy="40" r="10" stroke="#1e293b" stroke-width="4" fill="none"/>
+            <circle cx="38" cy="58" r="10" stroke="#1e293b" stroke-width="4" fill="none"/>
+            <circle cx="62" cy="58" r="10" stroke="#1e293b" stroke-width="4" fill="none"/>
+            <circle cx="50" cy="52" r="12" stroke="#1e293b" stroke-width="3" fill="none"/>
+        </g>
+
+        <!-- RADIOACTIVE -->
+        <g id="hazard-radioactive">
+            <polygon points="50,5 95,50 50,95 5,50" fill="#ffffff" stroke="#ef4444" stroke-width="8" stroke-linejoin="round"/>
+            <circle cx="50" cy="50" r="7" fill="#1e293b"/>
+            <path d="M 50 50 L 35 25 A 28 28 0 0 1 65 25 Z" fill="#1e293b"/>
+            <path d="M 50 50 L 72 63 A 28 28 0 0 1 50 78 Z" fill="#1e293b"/>
+            <path d="M 50 50 L 28 63 A 28 28 0 0 1 28 37 Z" fill="#1e293b"/>
+        </g>
+
+        <!-- COMPRESSED GAS -->
+        <g id="hazard-gas">
+            <polygon points="50,5 95,50 50,95 5,50" fill="#ffffff" stroke="#ef4444" stroke-width="8" stroke-linejoin="round"/>
+            <rect x="42" y="28" width="16" height="48" rx="8" fill="#1e293b"/>
+            <rect x="46" y="22" width="8" height="6" fill="#1e293b"/>
+            <rect x="36" y="65" width="28" height="4" fill="#1e293b" rx="2"/>
+        </g>
+
+        <!-- OXIDIZER -->
+        <g id="hazard-oxidizer">
+            <polygon points="50,5 95,50 50,95 5,50" fill="#ffffff" stroke="#ef4444" stroke-width="8" stroke-linejoin="round"/>
+            <circle cx="50" cy="60" r="14" fill="none" stroke="#1e293b" stroke-width="5"/>
+            <path d="M 50 25 Q 60 40 55 52 L 45 52 Q 40 40 50 25 Z" fill="#1e293b"/>
+        </g>
+
+        <!-- EYE PROTECTION REQUIRED -->
+        <g id="hazard-eyewear">
+            <circle cx="50" cy="50" r="42" fill="#2563eb" stroke="#1d4ed8" stroke-width="4"/>
+            <rect x="22" y="38" width="24" height="24" rx="6" fill="none" stroke="#ffffff" stroke-width="4"/>
+            <rect x="54" y="38" width="24" height="24" rx="6" fill="none" stroke="#ffffff" stroke-width="4"/>
+            <line x1="46" y1="46" x2="54" y2="46" stroke="#ffffff" stroke-width="4"/>
+            <line x1="14" y1="48" x2="22" y2="48" stroke="#ffffff" stroke-width="4"/>
+            <line x1="78" y1="48" x2="86" y2="48" stroke="#ffffff" stroke-width="4"/>
+        </g>
+    </svg>
+
+    <!-- Application Header -->
+    <header class="max-w-6xl mx-auto w-full bg-white rounded-3xl p-4 md:p-5 shadow-cartoon border-4 border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
+        <div class="flex items-center gap-4">
+            <!-- Mascot Avatar -->
+            <div class="relative w-16 h-16 bg-amber-300 border-4 border-slate-800 rounded-2xl flex items-center justify-center shadow-cartoon-sm float-anim flex-shrink-0">
+                <span class="text-3xl">🧪</span>
+                <span class="absolute -top-2 -right-2 bg-pink-500 text-white font-fredoka text-xs px-2 py-0.5 rounded-full border-2 border-slate-800">Mascot</span>
+            </div>
+            <div>
+                <div class="flex items-center gap-2">
+                    <h1 class="font-fredoka text-2xl md:text-3xl text-slate-800 tracking-wide">Cartoon Science Lab</h1>
+                    <span class="bg-blue-100 text-blue-700 font-bold text-xs px-2.5 py-1 rounded-full border border-blue-300">v2.5</span>
+                </div>
+                <p class="text-slate-600 font-medium text-sm flex items-center gap-1">
+                    <span>Guided by Dr. Molecule</span>
+                    <span class="text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full font-bold">Interactive Explorer</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- Top Right Stats & Audio Controls -->
+        <div class="flex items-center gap-3 w-full md:w-auto justify-between md:justify-end">
+            <!-- Stars Counter -->
+            <div class="bg-amber-100 border-3 border-slate-800 rounded-2xl px-4 py-2 flex items-center gap-2 shadow-cartoon-sm">
+                <i class="fa-solid fa-star text-amber-500 text-xl animate-bounce"></i>
+                <div>
+                    <div class="text-[10px] uppercase font-extrabold text-amber-800 tracking-wider">Total Stars</div>
+                    <div id="global-stars" class="font-fredoka text-xl text-amber-900 leading-none">0</div>
+                </div>
+            </div>
+
+            <!-- Sound FX Toggle -->
+            <button id="btn-toggle-sound" onclick="toggleAudio()" class="btn-cartoon bg-purple-500 hover:bg-purple-600 text-white border-3 border-slate-800 rounded-2xl p-3 shadow-cartoon-sm flex items-center justify-center">
+                <i id="sound-icon" class="fa-solid fa-volume-high text-lg"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Navigation Bar -->
+    <nav class="max-w-6xl mx-auto w-full mb-6">
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-2.5 p-2 bg-slate-900/10 rounded-3xl backdrop-blur-sm border-2 border-slate-800/20">
+            <button onclick="switchTab('explorer')" id="tab-explorer" class="tab-btn btn-cartoon py-3 px-3 rounded-2xl font-fredoka text-sm md:text-base flex items-center justify-center gap-2 bg-white text-slate-800 border-3 border-slate-800 shadow-cartoon-sm">
+                <i class="fa-solid fa-flask text-blue-500"></i>
+                <span>1. Apparatus</span>
+            </button>
+            <button onclick="switchTab('hazards')" id="tab-hazards" class="tab-btn btn-cartoon py-3 px-3 rounded-2xl font-fredoka text-sm md:text-base flex items-center justify-center gap-2 bg-slate-100 text-slate-600 hover:bg-white border-2 border-transparent">
+                <i class="fa-solid fa-triangle-exclamation text-amber-500"></i>
+                <span>2. Safety Labels</span>
+            </button>
+            <button onclick="switchTab('matching')" id="tab-matching" class="tab-btn btn-cartoon py-3 px-3 rounded-2xl font-fredoka text-sm md:text-base flex items-center justify-center gap-2 bg-slate-100 text-slate-600 hover:bg-white border-2 border-transparent">
+                <i class="fa-solid fa-bolt text-yellow-500"></i>
+                <span>3. Gear Rush</span>
+            </button>
+            <button onclick="switchTab('inspector')" id="tab-inspector" class="tab-btn btn-cartoon py-3 px-3 rounded-2xl font-fredoka text-sm md:text-base flex items-center justify-center gap-2 bg-slate-100 text-slate-600 hover:bg-white border-2 border-transparent">
+                <i class="fa-solid fa-magnifying-glass text-emerald-500"></i>
+                <span>4. Inspector</span>
+            </button>
+            <button onclick="switchTab('certificate')" id="tab-certificate" class="tab-btn btn-cartoon col-span-2 md:col-span-1 py-3 px-3 rounded-2xl font-fredoka text-sm md:text-base flex items-center justify-center gap-2 bg-slate-100 text-slate-600 hover:bg-white border-2 border-transparent">
+                <i class="fa-solid fa-award text-pink-500"></i>
+                <span>5. Certificate</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content Display Container -->
+    <main class="max-w-6xl mx-auto w-full flex-grow mb-6">
+
+        <!-- TAB 1: LAB APPARATUS EXPLORER -->
+        <section id="view-explorer" class="tab-view block space-y-6">
+            <!-- Mascot Speech Banner -->
+            <div class="bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-4 md:p-6 rounded-3xl border-4 border-slate-800 shadow-cartoon flex items-center gap-4">
+                <div class="text-4xl md:text-5 warmth-shake">💡</div>
+                <div>
+                    <h2 class="font-fredoka text-xl md:text-2xl mb-1">Welcome to the Interactive Lab Bench!</h2>
+                    <p class="text-blue-100 font-medium text-sm md:text-base">Click on any equipment below to learn what it's called, how scientists use it, essential safety rules, and fun science facts!</p>
+                </div>
+            </div>
+
+            <!-- Apparatus Cards Grid -->
+            <div id="apparatus-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                <!-- Javascript will populate interactive SVG cards here -->
+            </div>
+        </section>
+
+        <!-- TAB 2: HAZARD LABEL MASTER -->
+        <section id="view-hazards" class="tab-view hidden space-y-6">
+            <div class="bg-gradient-to-r from-amber-500 to-orange-600 text-white p-4 md:p-6 rounded-3xl border-4 border-slate-800 shadow-cartoon flex items-center gap-4">
+                <div class="text-4xl md:text-5">⚠️</div>
+                <div>
+                    <h2 class="font-fredoka text-xl md:text-2xl mb-1">Safety Label Training & Matching Game</h2>
+                    <p class="text-amber-100 font-medium text-sm md:text-base">Learn the universal chemical hazard symbols, then match each safety sign to the correct laboratory scenario!</p>
+                </div>
+            </div>
+
+            <!-- Sub-tab switcher for Hazard view -->
+            <div class="flex justify-center gap-3">
+                <button onclick="setHazardSubTab('study')" id="subtab-hazard-study" class="btn-cartoon px-5 py-2.5 rounded-2xl font-fredoka bg-amber-400 text-slate-900 border-3 border-slate-800 shadow-cartoon-sm">
+                    <i class="fa-solid fa-book-open mr-2"></i>Flashcard Guide
+                </button>
+                <button onclick="setHazardSubTab('game')" id="subtab-hazard-game" class="btn-cartoon px-5 py-2.5 rounded-2xl font-fredoka bg-white text-slate-700 border-3 border-slate-800 shadow-cartoon-sm">
+                    <i class="fa-solid fa-gamepad mr-2"></i>Scenario Match Game
+                </button>
+            </div>
+
+            <!-- Sub view 1: Hazard Flashcards -->
+            <div id="hazard-study-view" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                <!-- Javascript populates safety cards here -->
+            </div>
+
+            <!-- Sub view 2: Scenario Match Minigame -->
+            <div id="hazard-game-view" class="hidden bg-white rounded-3xl p-6 border-4 border-slate-800 shadow-cartoon space-y-6">
+                <div class="flex justify-between items-center border-b-2 border-slate-100 pb-4">
+                    <div>
+                        <span class="text-xs font-bold uppercase text-amber-600 bg-amber-100 px-3 py-1 rounded-full">Interactive Scenario Challenge</span>
+                        <h3 class="font-fredoka text-2xl text-slate-800 mt-1">Match the Scenario to the Correct Safety Symbol</h3>
+                    </div>
+                    <div id="hazard-game-score" class="font-fredoka text-lg bg-slate-100 px-4 py-2 rounded-2xl border-2 border-slate-800">
+                        Matches: <span class="text-amber-600" id="hazard-matched-count">0</span> / <span id="hazard-total-count">6</span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+                    <!-- Scenarios Left Column -->
+                    <div id="scenario-list" class="space-y-3">
+                        <!-- Populated by JS -->
+                    </div>
+
+                    <!-- Target Hazard Symbols Right Column -->
+                    <div id="symbol-drop-list" class="grid grid-cols-2 sm:grid-cols-3 gap-3 bg-slate-50 p-4 rounded-2xl border-2 border-dashed border-slate-300">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: LAB GEAR MATCHING RUSH -->
+        <section id="view-matching" class="tab-view hidden space-y-6">
+            <div class="bg-gradient-to-r from-purple-500 to-pink-600 text-white p-4 md:p-6 rounded-3xl border-4 border-slate-800 shadow-cartoon flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <div class="text-4xl md:text-5">⏱️</div>
+                    <div>
+                        <h2 class="font-fredoka text-xl md:text-2xl mb-1">Lab Gear Matching Rush!</h2>
+                        <p class="text-purple-100 font-medium text-sm md:text-base">Test your memory and speed! Pick the correct apparatus purpose before time runs out!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game Card Area -->
+            <div class="bg-white rounded-3xl p-6 md:p-8 border-4 border-slate-800 shadow-cartoon relative overflow-hidden">
+                <!-- Game Header Bar -->
+                <div class="flex flex-wrap items-center justify-between gap-4 border-b-4 border-slate-100 pb-6 mb-6">
+                    <!-- Timer -->
+                    <div class="bg-rose-100 border-3 border-slate-800 rounded-2xl px-5 py-2.5 flex items-center gap-3">
+                        <i class="fa-solid fa-stopwatch text-rose-500 text-2xl"></i>
+                        <div>
+                            <div class="text-[10px] font-extrabold uppercase text-rose-700">Time Left</div>
+                            <div id="rush-timer" class="font-fredoka text-2xl text-rose-900 leading-none">30s</div>
+                        </div>
+                    </div>
+
+                    <!-- Streak & Multiplier -->
+                    <div class="flex items-center gap-3">
+                        <div class="bg-yellow-100 border-3 border-slate-800 rounded-2xl px-4 py-2 text-center">
+                            <div class="text-[10px] font-extrabold uppercase text-yellow-700">Streak</div>
+                            <div id="rush-streak" class="font-fredoka text-xl text-yellow-900 leading-none">0 🔥</div>
+                        </div>
+                        <div class="bg-purple-100 border-3 border-slate-800 rounded-2xl px-4 py-2 text-center">
+                            <div class="text-[10px] font-extrabold uppercase text-purple-700">Score</div>
+                            <div id="rush-score" class="font-fredoka text-xl text-purple-900 leading-none">0</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game Start Overlay -->
+                <div id="rush-start-overlay" class="text-center py-12 space-y-6">
+                    <div class="w-24 h-24 bg-purple-100 rounded-full flex items-center justify-center mx-auto border-4 border-slate-800 text-5xl">
+                        ⚡
+                    </div>
+                    <div>
+                        <h3 class="font-fredoka text-3xl text-slate-800">Ready for the Speed Challenge?</h3>
+                        <p class="text-slate-600 max-w-md mx-auto mt-2">You will have 30 seconds to match visual icons with their real scientific functions!</p>
+                    </div>
+                    <button onclick="startRushGame()" class="btn-cartoon bg-emerald-500 hover:bg-emerald-600 text-white font-fredoka text-xl px-10 py-4 rounded-2xl border-4 border-slate-800 shadow-cartoon inline-flex items-center gap-3">
+                        <i class="fa-solid fa-play"></i> Start Rush Game!
+                    </button>
+                </div>
+
+                <!-- Active Question Container -->
+                <div id="rush-active-game" class="hidden space-y-6">
+                    <div class="flex flex-col md:flex-row items-center gap-6 bg-blue-50 p-6 rounded-2xl border-3 border-slate-800">
+                        <div id="rush-icon-container" class="w-32 h-32 bg-white rounded-2xl border-3 border-slate-800 p-2 flex items-center justify-center shadow-cartoon-sm flex-shrink-0">
+                            <!-- Question SVG populated here -->
+                        </div>
+                        <div class="w-full">
+                            <span id="rush-question-tag" class="text-xs font-bold uppercase tracking-wider bg-blue-200 text-blue-800 px-3 py-1 rounded-full">Identify Purpose</span>
+                            <h3 id="rush-question-title" class="font-fredoka text-2xl md:text-3xl text-slate-800 mt-2">Which item is this?</h3>
+                        </div>
+                    </div>
+
+                    <!-- Options Grid -->
+                    <div id="rush-options-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Game Over Summary -->
+                <div id="rush-over-overlay" class="hidden text-center py-8 space-y-6">
+                    <div id="rush-stars-display" class="flex justify-center gap-3 text-4xl text-amber-400">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-fredoka text-3xl text-slate-800">Time's Up, Young Scientist!</h3>
+                        <p class="text-slate-600 text-lg mt-1">Final Score: <span id="rush-final-score" class="font-bold text-purple-600">0</span> points!</p>
+                    </div>
+                    <div class="flex justify-center gap-4">
+                        <button onclick="startRushGame()" class="btn-cartoon bg-purple-500 hover:bg-purple-600 text-white font-fredoka text-lg px-8 py-3 rounded-2xl border-3 border-slate-800 shadow-cartoon flex items-center gap-2">
+                            <i class="fa-solid fa-rotate-right"></i> Play Again
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: LAB INSPECTOR (SPOT THE HAZARD) -->
+        <section id="view-inspector" class="tab-view hidden space-y-6">
+            <div class="bg-gradient-to-r from-emerald-500 to-teal-600 text-white p-4 md:p-6 rounded-3xl border-4 border-slate-800 shadow-cartoon flex items-center justify-between">
+                <div class="flex items-center gap-4">
+                    <div class="text-4xl md:text-5">🔍</div>
+                    <div>
+                        <h2 class="font-fredoka text-xl md:text-2xl mb-1">Safety Inspector: Spot the Hazards!</h2>
+                        <p class="text-emerald-100 font-medium text-sm md:text-base">Tap on unsafe actions or hazards hidden in this science lab to make it safe!</p>
+                    </div>
+                </div>
+                <div class="bg-white/20 backdrop-blur-md px-4 py-2 rounded-2xl border-2 border-white/40 font-fredoka text-sm md:text-base whitespace-nowrap">
+                    Found: <span id="hazards-found-count" class="text-yellow-300 font-bold">0</span> / 6
+                </div>
+            </div>
+
+            <!-- Interactive 2D Cartoon Lab Room Scene -->
+            <div class="bg-white rounded-3xl p-4 md:p-6 border-4 border-slate-800 shadow-cartoon relative">
+                <div class="relative w-full aspect-[16/9] bg-sky-100 rounded-2xl border-3 border-slate-800 overflow-hidden select-none">
+                    <!-- Background Lab Graphic -->
+                    <svg viewBox="0 0 800 450" class="w-full h-full">
+                        <!-- Back Wall -->
+                        <rect x="0" y="0" width="800" height="300" fill="#e0f2fe"/>
+                        <!-- Tile grid lines -->
+                        <line x1="0" y1="100" x2="800" y2="100" stroke="#bae6fd" stroke-width="2"/>
+                        <line x1="0" y1="200" x2="800" y2="200" stroke="#bae6fd" stroke-width="2"/>
+                        <!-- Floor -->
+                        <rect x="0" y="300" width="800" height="150" fill="#f1f5f9"/>
+                        <line x1="0" y1="300" x2="800" y2="300" stroke="#334155" stroke-width="6"/>
+
+                        <!-- Shelves -->
+                        <rect x="50" y="80" width="220" height="12" fill="#b45309" rx="3"/>
+                        <rect x="530" y="80" width="220" height="12" fill="#b45309" rx="3"/>
+
+                        <!-- Lab Benches -->
+                        <rect x="60" y="240" width="300" height="80" fill="#64748b" rx="6" stroke="#1e293b" stroke-width="4"/>
+                        <rect x="440" y="240" width="300" height="80" fill="#64748b" rx="6" stroke="#1e293b" stroke-width="4"/>
+
+                        <!-- Safety Posters on Wall -->
+                        <rect x="340" y="40" width="120" height="80" fill="#ffffff" stroke="#334155" stroke-width="3" rx="4"/>
+                        <text x="400" y="70" font-family="Fredoka" font-size="12" fill="#0284c7" text-anchor="middle" font-weight="bold">LAB RULES</text>
+                        <text x="400" y="90" font-family="sans-serif" font-size="9" fill="#64748b" text-anchor="middle">1. Wear Goggles</text>
+                        <text x="400" y="105" font-family="sans-serif" font-size="9" fill="#64748b" text-anchor="middle">2. No Food or Drinks</text>
+                    </svg>
+
+                    <!-- HAZARD HOTSPOTS OVERLAY -->
+                    <!-- Hazard 1: Eating Snack Near Chemicals (Top Left Bench) -->
+                    <button onclick="inspectHazard(0)" id="hazard-spot-0" class="absolute left-[12%] top-[48%] w-[12%] h-[20%] group transition-all">
+                        <div class="w-full h-full bg-rose-500/20 group-hover:bg-rose-500/40 rounded-2xl border-2 border-dashed border-rose-500 flex items-center justify-center cursor-pointer p-1">
+                            <span id="spot-icon-0" class="text-2xl md:text-3xl animate-bounce">🍔</span>
+                        </div>
+                    </button>
+
+                    <!-- Hazard 2: Unattended Open Flame (Left Bench Right Side) -->
+                    <button onclick="inspectHazard(1)" id="hazard-spot-1" class="absolute left-[32%] top-[42%] w-[10%] h-[24%] group transition-all">
+                        <div class="w-full h-full bg-rose-500/20 group-hover:bg-rose-500/40 rounded-2xl border-2 border-dashed border-rose-500 flex items-center justify-center cursor-pointer p-1">
+                            <span id="spot-icon-1" class="text-2xl md:text-3xl animate-pulse">🔥</span>
+                        </div>
+                    </button>
+
+                    <!-- Hazard 3: No Safety Goggles Student (Right Bench Left Side) -->
+                    <button onclick="inspectHazard(2)" id="hazard-spot-2" class="absolute left-[58%] top-[38%] w-[12%] h-[26%] group transition-all">
+                        <div class="w-full h-full bg-rose-500/20 group-hover:bg-rose-500/40 rounded-2xl border-2 border-dashed border-rose-500 flex items-center justify-center cursor-pointer p-1">
+                            <span id="spot-icon-2" class="text-2xl md:text-3xl">👀</span>
+                        </div>
+                    </button>
+
+                    <!-- Hazard 4: Unlabelled Mystery Chemical Bottle (Shelf Right) -->
+                    <button onclick="inspectHazard(3)" id="hazard-spot-3" class="absolute left-[72%] top-[10%] w-[10%] h-[18%] group transition-all">
+                        <div class="w-full h-full bg-rose-500/20 group-hover:bg-rose-500/40 rounded-2xl border-2 border-dashed border-rose-500 flex items-center justify-center cursor-pointer p-1">
+                            <span id="spot-icon-3" class="text-2xl md:text-3xl">🧪</span>
+                        </div>
+                    </button>
+
+                    <!-- Hazard 5: Water Spill on Floor (Bottom Center) -->
+                    <button onclick="inspectHazard(4)" id="hazard-spot-4" class="absolute left-[42%] top-[72%] w-[14%] h-[18%] group transition-all">
+                        <div class="w-full h-full bg-rose-500/20 group-hover:bg-rose-500/40 rounded-2xl border-2 border-dashed border-rose-500 flex items-center justify-center cursor-pointer p-1">
+                            <span id="spot-icon-4" class="text-2xl md:text-3xl">💧</span>
+                        </div>
+                    </button>
+
+                    <!-- Hazard 6: Broken Glass Beaker on Floor (Bottom Right) -->
+                    <button onclick="inspectHazard(5)" id="hazard-spot-5" class="absolute left-[78%] top-[70%] w-[12%] h-[20%] group transition-all">
+                        <div class="w-full h-full bg-rose-500/20 group-hover:bg-rose-500/40 rounded-2xl border-2 border-dashed border-rose-500 flex items-center justify-center cursor-pointer p-1">
+                            <span id="spot-icon-5" class="text-2xl md:text-3xl">💥</span>
+                        </div>
+                    </button>
+                </div>
+
+                <!-- Inspector Status Message Box -->
+                <div id="inspector-feedback" class="mt-4 p-4 rounded-2xl bg-slate-100 border-2 border-slate-300 text-slate-700 flex items-center gap-3">
+                    <i class="fa-solid fa-circle-info text-blue-500 text-xl"></i>
+                    <p class="font-medium text-sm md:text-base">Click on suspicious items in the lab room to inspect and resolve safety violations!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 5: CERTIFICATE & BADGES -->
+        <section id="view-certificate" class="tab-view hidden space-y-6">
+            <!-- Badges Progress Grid -->
+            <div class="bg-white rounded-3xl p-6 border-4 border-slate-800 shadow-cartoon space-y-4">
+                <h3 class="font-fredoka text-2xl text-slate-800 flex items-center gap-2">
+                    <i class="fa-solid fa-medal text-amber-500"></i>
+                    <span>Your Science Badges</span>
+                </h3>
+                <div id="badges-container" class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <!-- Printable Certificate Container -->
+            <div id="printable-certificate" class="bg-amber-50 rounded-3xl p-6 md:p-10 border-8 border-amber-400 shadow-cartoon-lg text-center relative overflow-hidden">
+                <!-- Decorative Corner Ribbons -->
+                <div class="absolute -top-10 -left-10 w-24 h-24 bg-amber-300 rotate-45 border-4 border-slate-800"></div>
+                <div class="absolute -top-10 -right-10 w-24 h-24 bg-amber-300 rotate-45 border-4 border-slate-800"></div>
+
+                <div class="border-4 border-dashed border-amber-300 p-6 rounded-2xl space-y-6">
+                    <div class="space-y-2">
+                        <div class="text-xs font-black tracking-widest text-amber-700 uppercase">Official Science Academy Award</div>
+                        <h2 class="font-fredoka text-3xl md:text-5xl text-slate-800 tracking-wide">Junior Scientist Certificate</h2>
+                        <p class="text-amber-800 font-medium italic text-sm md:text-base">This certificate of achievement is proudly presented to:</p>
+                    </div>
+
+                    <!-- Student Name Input Box -->
+                    <div class="max-w-md mx-auto my-4">
+                        <input type="text" id="student-name-input" placeholder="Type Your Name Here..." value="Alex Spark" 
+                               class="no-print font-fredoka text-2xl text-center w-full px-4 py-2 border-b-4 border-slate-800 bg-transparent focus:outline-none focus:border-purple-600 text-purple-700">
+                        <div class="hidden print:block font-fredoka text-4xl text-purple-800 border-b-4 border-slate-800 pb-2" id="print-name-display">Alex Spark</div>
+                    </div>
+
+                    <p class="text-slate-700 max-w-xl mx-auto text-sm md:text-base leading-relaxed">
+                        For successfully mastering common laboratory apparatus, demonstrating top-tier safety awareness, and earning the title of certified <strong class="text-purple-700">Lab Safety Officer</strong>!
+                    </p>
+
+                    <!-- Unlocked Badges Summary on Certificate -->
+                    <div class="flex justify-center items-center gap-6 py-4">
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-amber-200 rounded-full border-3 border-slate-800 flex items-center justify-center text-3xl mx-auto shadow-cartoon-sm">🧪</div>
+                            <span class="text-xs font-bold text-slate-700 mt-1 block">Apparatus</span>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-emerald-200 rounded-full border-3 border-slate-800 flex items-center justify-center text-3xl mx-auto shadow-cartoon-sm">⚠️</div>
+                            <span class="text-xs font-bold text-slate-700 mt-1 block">Safety Expert</span>
+                        </div>
+                        <div class="text-center">
+                            <div class="w-16 h-16 bg-pink-200 rounded-full border-3 border-slate-800 flex items-center justify-center text-3xl mx-auto shadow-cartoon-sm">🏆</div>
+                            <span class="text-xs font-bold text-slate-700 mt-1 block">Inspector</span>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t-2 border-amber-200 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-bold text-slate-600">
+                        <div>Date Issued: <span id="cert-date">2026-10-10</span></div>
+                        <div class="flex items-center gap-2">
+                            <span>Dr. Molecule Signature:</span>
+                            <span class="font-fredoka text-lg text-indigo-600 italic">Dr. Molecule 🧪</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Print Button (Hidden during print) -->
+                <div class="no-print mt-6 flex justify-center gap-4">
+                    <button onclick="printCertificate()" class="btn-cartoon bg-pink-500 hover:bg-pink-600 text-white font-fredoka px-8 py-3 rounded-2xl border-3 border-slate-800 shadow-cartoon flex items-center gap-2">
+                        <i class="fa-solid fa-print"></i> Print / Save Certificate
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal Dialog for Item Details -->
+    <div id="detail-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl border-4 border-slate-800 shadow-cartoon-lg max-w-lg w-full p-6 relative animate-in fade-in zoom-in duration-200 space-y-5">
+            <!-- Close Button -->
+            <button onclick="closeModal()" class="absolute top-4 right-4 w-10 h-10 bg-slate-100 hover:bg-slate-200 border-2 border-slate-800 rounded-full flex items-center justify-center font-bold text-slate-700">
+                ✕
+            </button>
+
+            <!-- Header Content -->
+            <div class="flex items-center gap-4">
+                <div id="modal-svg-container" class="w-20 h-20 bg-blue-50 border-3 border-slate-800 rounded-2xl p-2 flex items-center justify-center flex-shrink-0">
+                    <!-- SVG populated -->
+                </div>
+                <div>
+                    <span id="modal-tag" class="text-xs font-extrabold uppercase bg-purple-100 text-purple-700 px-3 py-1 rounded-full border border-purple-200">Equipment</span>
+                    <h3 id="modal-title" class="font-fredoka text-2xl text-slate-800 mt-1">Item Title</h3>
+                </div>
+            </div>
+
+            <!-- Detailed Content Sections -->
+            <div class="space-y-3 text-sm">
+                <div class="bg-slate-50 p-3.5 rounded-2xl border-2 border-slate-200">
+                    <h4 class="font-bold text-slate-800 flex items-center gap-2 mb-1">
+                        <i class="fa-solid fa-circle-info text-blue-500"></i> Primary Use:
+                    </h4>
+                    <p id="modal-use" class="text-slate-600 leading-relaxed"></p>
+                </div>
+
+                <div class="bg-emerald-50 p-3.5 rounded-2xl border-2 border-emerald-200">
+                    <h4 class="font-bold text-emerald-900 flex items-center gap-2 mb-1">
+                        <i class="fa-solid fa-shield-halved text-emerald-600"></i> How to Handle Safely:
+                    </h4>
+                    <p id="modal-safety" class="text-emerald-800 leading-relaxed"></p>
+                </div>
+
+                <div class="bg-amber-50 p-3.5 rounded-2xl border-2 border-amber-200">
+                    <h4 class="font-bold text-amber-900 flex items-center gap-2 mb-1">
+                        <i class="fa-solid fa-lightbulb text-amber-500"></i> Fun Science Fact:
+                    </h4>
+                    <p id="modal-fact" class="text-amber-800 italic leading-relaxed"></p>
+                </div>
+            </div>
+
+            <!-- Speak / Read Aloud Button -->
+            <button onclick="speakModalText()" class="btn-cartoon w-full bg-blue-500 hover:bg-blue-600 text-white font-fredoka py-3 rounded-2xl border-3 border-slate-800 shadow-cartoon-sm flex items-center justify-center gap-2">
+                <i class="fa-solid fa-volume-high"></i> Listen with Dr. Molecule
+            </button>
+        </div>
+    </div>
+
+    <!-- Canvas Confetti Overlay -->
+    <canvas id="confetti-canvas" class="fixed inset-0 pointer-events-none z-50"></canvas>
+
+    <script>
+        /* --- GAME DATA STRUCTURES --- */
+        const APPARATUS_DATA = [
+            {
+                id: 'beaker',
+                name: 'Beaker',
+                svgId: 'svg-beaker',
+                color: 'bg-blue-100',
+                use: 'Used for holding, mixing, and heating liquids in the laboratory.',
+                safety: 'Never fill to the top. Always place on a flat surface or wire gauze when heating.',
+                fact: 'Beakers come in sizes from 5 milliliters up to several liters!'
+            },
+            {
+                id: 'flask',
+                name: 'Erlenmeyer Flask',
+                svgId: 'svg-flask',
+                color: 'bg-purple-100',
+                use: 'Used for swirling and mixing liquids without risk of spilling thanks to its narrow neck.',
+                safety: 'Hold by the neck when swirling. Use rubber stoppers if shaking vigorous liquids.',
+                fact: 'It was invented by German chemist Emil Erlenmeyer in 1860!'
+            },
+            {
+                id: 'cylinder',
+                name: 'Graduated Cylinder',
+                svgId: 'svg-cylinder',
+                color: 'bg-yellow-100',
+                use: 'Used to measure liquid volumes accurately with line markings.',
+                safety: 'Always read liquid level at eye level looking at the bottom curve (meniscus).',
+                fact: 'It is far more accurate for measuring liquid volumes than a beaker!'
+            },
+            {
+                id: 'burner',
+                name: 'Bunsen Burner',
+                svgId: 'svg-burner',
+                color: 'bg-orange-100',
+                use: 'Produces a single open gas flame used for heating substances.',
+                safety: 'Tie long hair back. Keep flammable liquids far away and never leave unattended.',
+                fact: 'The hottest blue part of the flame can reach over 1,500°C (2,700°F)!'
+            },
+            {
+                id: 'testtubes',
+                name: 'Test Tube & Rack',
+                svgId: 'svg-testtubes',
+                color: 'bg-emerald-100',
+                use: 'Holds small samples of chemicals for testing and observing reactions.',
+                safety: 'Never point a heated test tube at yourself or anyone nearby.',
+                fact: 'Test tubes are rounded at the bottom so liquid doesn’t get stuck in sharp corners.'
+            },
+            {
+                id: 'pipette',
+                name: 'Pipette / Dropper',
+                svgId: 'svg-pipette',
+                color: 'bg-rose-100',
+                use: 'Transfers small, precise drops of liquid from one container to another.',
+                safety: 'Keep upright when liquid is inside to stop fluid entering the squeeze bulb.',
+                fact: 'Micro-pipettes used in DNA science can measure liquids smaller than a single raindrop!'
+            },
+            {
+                id: 'tongs',
+                name: 'Lab Tongs',
+                svgId: 'svg-tongs',
+                color: 'bg-slate-100',
+                use: 'Grips and lifts hot glassware such as beakers or crucibles.',
+                safety: 'Ensure a firm grip before lifting heavy hot glass items off burners.',
+                fact: 'Tongs are coated with heat-resistant materials so they do not melt or slip.'
+            },
+            {
+                id: 'goggles',
+                name: 'Safety Goggles',
+                svgId: 'svg-goggles',
+                color: 'bg-cyan-100',
+                use: 'Protects eyes from chemical splashes, vapors, and flying debris.',
+                safety: 'Wear goggles at ALL times when handling chemicals or open flames.',
+                fact: 'Modern safety goggles are made from tough polycarbonate glass that won’t shatter!'
+            },
+            {
+                id: 'thermometer',
+                name: 'Thermometer',
+                svgId: 'svg-thermometer',
+                color: 'bg-red-100',
+                use: 'Measures the temperature of liquids or reactions.',
+                safety: 'Never stir liquid using a glass thermometer; use a glass stirring rod instead.',
+                fact: 'Alcohol thermometers replaced old mercury ones to make labs much safer!'
+            },
+            {
+                id: 'microscope',
+                name: 'Microscope',
+                svgId: 'svg-microscope',
+                color: 'bg-teal-100',
+                use: 'Magnifies tiny objects like plant cells, bacteria, or crystals.',
+                safety: 'Carry with two hands: one on the arm and one supporting the base.',
+                fact: 'Electron microscopes can magnify items up to 10 million times!'
+            },
+            {
+                id: 'funnel',
+                name: 'Funnel',
+                svgId: 'svg-funnel',
+                color: 'bg-amber-100',
+                use: 'Guides liquids or powders into narrow openings without spilling.',
+                safety: 'Pour slowly so the funnel doesn’t overflow.',
+                fact: 'Funnels are often used with filter paper to separate liquids from solid particles.'
+            },
+            {
+                id: 'balance',
+                name: 'Electronic Balance',
+                svgId: 'svg-balance',
+                color: 'bg-indigo-100',
+                use: 'Measures the exact mass of solid chemicals or objects in grams.',
+                safety: 'Never place chemicals directly on the balance pan; use a weighing boat or paper.',
+                fact: 'Balances are so sensitive that a gust of wind can change the weight reading!'
+            }
+        ];
+
+        const HAZARD_DATA = [
+            { id: 'flammable', name: 'Flammable', svgId: 'hazard-flammable', desc: 'Catches fire easily when exposed to heat or sparks.' },
+            { id: 'corrosive', name: 'Corrosive', svgId: 'hazard-corrosive', desc: 'Can burn through skin, eyes, and corrode metals.' },
+            { id: 'toxic', name: 'Toxic / Poison', svgId: 'hazard-toxic', desc: 'Dangerous or fatal if swallowed, inhaled, or absorbed.' },
+            { id: 'explosive', name: 'Explosive', svgId: 'hazard-explosive', desc: 'May explode due to fire, shock, or friction.' },
+            { id: 'biohazard', name: 'Biohazard', svgId: 'hazard-biohazard', desc: 'Contains biological agents like bacteria or viruses.' },
+            { id: 'radioactive', name: 'Radioactive', svgId: 'hazard-radioactive', desc: 'Emits radiation that can harm living cells.' },
+            { id: 'gas', name: 'Compressed Gas', svgId: 'hazard-gas', desc: 'Gas stored under pressure that may burst if heated.' },
+            { id: 'oxidizer', name: 'Oxidizer', svgId: 'hazard-oxidizer', desc: 'Releases oxygen causing other fires to burn faster.' },
+            { id: 'eyewear', name: 'Eye Protection', svgId: 'hazard-eyewear', desc: 'Safety goggles must be worn in this area.' }
+        ];
+
+        const SCENARIOS_DATA = [
+            { id: 1, text: "A bottle of strong acid that can burn skin and melt metal.", correctHazard: "corrosive" },
+            { id: 2, text: "Rubbing alcohol or ethanol that easily catches fire near flame.", correctHazard: "flammable" },
+            { id: 3, text: "A liquid chemical that is highly poisonous if accidentally swallowed.", correctHazard: "toxic" },
+            { id: 4, text: "High-pressure oxygen gas cylinder stored in the corner.", correctHazard: "gas" },
+            { id: 5, text: "Used bacterial petri dishes requiring biohazard disposal.", correctHazard: "biohazard" },
+            { id: 6, text: "Lab zone where splash protection goggles are mandatory.", correctHazard: "eyewear" }
+        ];
+
+        const SPOT_HAZARDS = [
+            { id: 0, title: 'Eating Snack Near Chemicals', fixText: 'Removed snack! Never eat or drink inside a science lab to prevent chemical contamination.', resolvedIcon: '🚫' },
+            { id: 1, title: 'Unattended Open Flame', fixText: 'Turned off burner! Always turn off Bunsen burners when leaving the bench.', resolvedIcon: '🛑' },
+            { id: 2, title: 'Missing Safety Eyewear', fixText: 'Put on goggles! Protect your eyes whenever working with liquids.', resolvedIcon: '🥽' },
+            { id: 3, title: 'Unlabelled Chemical Bottle', fixText: 'Label added! All chemical bottles must be clearly named and marked.', resolvedIcon: '🏷️' },
+            { id: 4, title: 'Liquid Spill on Floor', fixText: 'Cleaned spill! Wet floors cause slips and fall injuries.', resolvedIcon: '🧹' },
+            { id: 5, title: 'Broken Glass Beaker', fixText: 'Swept up glass! Always dispose of broken glass in dedicated bins using a brush.', resolvedIcon: '🗑️' }
+        ];
+
+        /* --- GLOBAL STATE VARIABLES --- */
+        let totalStars = 0;
+        let audioMuted = false;
+        let exploredApparatusCount = 0;
+        const exploredSet = new Set();
+        let matchedScenarios = 0;
+
+        // Rush game variables
+        let rushTimer = null;
+        let rushTimeLeft = 30;
+        let rushScore = 0;
+        let rushStreak = 0;
+        let currentRushItem = null;
+
+        // Spot hazard state
+        const resolvedHazards = new Set();
+
+        /* --- WEB AUDIO API SOUND GENERATOR --- */
+        let audioCtx = null;
+
+        function getAudioContext() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            return audioCtx;
+        }
+
+        function playSound(type) {
+            if (audioMuted) return;
+            try {
+                const ctx = getAudioContext();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                const now = ctx.currentTime;
+
+                if (type === 'click') {
+                    osc.frequency.setValueAtTime(400, now);
+                    gain.gain.setValueAtTime(0.1, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+                    osc.start(now);
+                    osc.stop(now + 0.05);
+                } else if (type === 'correct') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(523.25, now); // C5
+                    osc.frequency.setValueAtTime(659.25, now + 0.08); // E5
+                    osc.frequency.setValueAtTime(783.99, now + 0.16); // G5
+                    gain.gain.setValueAtTime(0.15, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+                    osc.start(now);
+                    osc.stop(now + 0.3);
+                } else if (type === 'wrong') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(220, now);
+                    osc.frequency.setValueAtTime(180, now + 0.1);
+                    gain.gain.setValueAtTime(0.15, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+                    osc.start(now);
+                    osc.stop(now + 0.25);
+                } else if (type === 'win') {
+                    const freqs = [523.25, 659.25, 783.99, 1046.50];
+                    freqs.forEach((f, idx) => {
+                        const o = ctx.createOscillator();
+                        const g = ctx.createGain();
+                        o.connect(g);
+                        g.connect(ctx.destination);
+                        o.frequency.setValueAtTime(f, now + idx * 0.08);
+                        g.gain.setValueAtTime(0.12, now + idx * 0.08);
+                        g.gain.exponentialRampToValueAtTime(0.01, now + idx * 0.08 + 0.25);
+                        o.start(now + idx * 0.08);
+                        o.stop(now + idx * 0.08 + 0.25);
+                    });
+                }
+            } catch (e) {
+                console.log("Audio play suppressed:", e);
+            }
+        }
+
+        function toggleAudio() {
+            audioMuted = !audioMuted;
+            const icon = document.getElementById('sound-icon');
+            if (audioMuted) {
+                icon.className = 'fa-solid fa-volume-xmark text-lg text-rose-300';
+            } else {
+                icon.className = 'fa-solid fa-volume-high text-lg';
+                playSound('click');
+            }
+        }
+
+        /* --- UI TAB NAVIGATION --- */
+        function switchTab(tabId) {
+            playSound('click');
+            document.querySelectorAll('.tab-view').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.className = 'tab-btn btn-cartoon py-3 px-3 rounded-2xl font-fredoka text-sm md:text-base flex items-center justify-center gap-2 bg-slate-100 text-slate-600 hover:bg-white border-2 border-transparent';
+            });
+
+            document.getElementById(`view-${tabId}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`tab-${tabId}`);
+            activeBtn.className = 'tab-btn btn-cartoon py-3 px-3 rounded-2xl font-fredoka text-sm md:text-base flex items-center justify-center gap-2 bg-white text-slate-800 border-3 border-slate-800 shadow-cartoon-sm';
+
+            if (tabId === 'certificate') {
+                updateBadgesUI();
+            }
+        }
+
+        function addStars(count) {
+            totalStars += count;
+            document.getElementById('global-stars').innerText = totalStars;
+        }
+
+        /* --- MODE 1: APPARATUS EXPLORER LOGIC --- */
+        function renderApparatusGrid() {
+            const container = document.getElementById('apparatus-grid');
+            container.innerHTML = '';
+
+            APPARATUS_DATA.forEach(item => {
+                const card = document.createElement('div');
+                card.className = `btn-cartoon bg-white rounded-3xl p-4 border-4 border-slate-800 shadow-cartoon flex flex-col items-center text-center cursor-pointer relative group`;
+                card.onclick = () => openApparatusModal(item);
+
+                card.innerHTML = `
+                    <div class="w-full aspect-square ${item.color} rounded-2xl border-2 border-slate-800 p-3 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
+                        <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-md">
+                            <use href="#${item.svgId}"></use>
+                        </svg>
+                    </div>
+                    <h3 class="font-fredoka text-lg text-slate-800">${item.name}</h3>
+                    <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full mt-2 border border-blue-200">Tap to Explore</span>
+                    <span id="badge-explored-${item.id}" class="hidden absolute top-2 right-2 bg-emerald-500 text-white rounded-full p-1 border-2 border-slate-800 text-xs">
+                        <i class="fa-solid fa-check"></i>
+                    </span>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function openApparatusModal(item) {
+            playSound('click');
+            if (!exploredSet.has(item.id)) {
+                exploredSet.add(item.id);
+                document.getElementById(`badge-explored-${item.id}`)?.classList.remove('hidden');
+                addStars(5);
+            }
+
+            document.getElementById('modal-svg-container').innerHTML = `
+                <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow">
+                    <use href="#${item.svgId}"></use>
+                </svg>
+            `;
+            document.getElementById('modal-title').innerText = item.name;
+            document.getElementById('modal-use').innerText = item.use;
+            document.getElementById('modal-safety').innerText = item.safety;
+            document.getElementById('modal-fact').innerText = item.fact;
+
+            window.currentModalData = item;
+            document.getElementById('detail-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            playSound('click');
+            document.getElementById('detail-modal').classList.add('hidden');
+        }
+
+        function speakModalText() {
+            if ('speechSynthesis' in window && window.currentModalData) {
+                window.speechSynthesis.cancel();
+                const text = `${window.currentModalData.name}. ${window.currentModalData.use}`;
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.rate = 0.95;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        /* --- MODE 2: HAZARD LABEL MASTER LOGIC --- */
+        function setHazardSubTab(type) {
+            playSound('click');
+            const studyView = document.getElementById('hazard-study-view');
+            const gameView = document.getElementById('hazard-game-view');
+            const studyBtn = document.getElementById('subtab-hazard-study');
+            const gameBtn = document.getElementById('subtab-hazard-game');
+
+            if (type === 'study') {
+                studyView.classList.remove('hidden');
+                gameView.classList.add('hidden');
+                studyBtn.className = 'btn-cartoon px-5 py-2.5 rounded-2xl font-fredoka bg-amber-400 text-slate-900 border-3 border-slate-800 shadow-cartoon-sm';
+                gameBtn.className = 'btn-cartoon px-5 py-2.5 rounded-2xl font-fredoka bg-white text-slate-700 border-3 border-slate-800 shadow-cartoon-sm';
+            } else {
+                studyView.classList.add('hidden');
+                gameView.classList.remove('hidden');
+                gameBtn.className = 'btn-cartoon px-5 py-2.5 rounded-2xl font-fredoka bg-amber-400 text-slate-900 border-3 border-slate-800 shadow-cartoon-sm';
+                studyBtn.className = 'btn-cartoon px-5 py-2.5 rounded-2xl font-fredoka bg-white text-slate-700 border-3 border-slate-800 shadow-cartoon-sm';
+                initHazardGame();
+            }
+        }
+
+        function renderHazardCards() {
+            const container = document.getElementById('hazard-study-view');
+            container.innerHTML = '';
+
+            HAZARD_DATA.forEach(h => {
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-3xl p-5 border-4 border-slate-800 shadow-cartoon flex items-center gap-4";
+                card.innerHTML = `
+                    <div class="w-20 h-20 bg-rose-50 rounded-2xl border-2 border-slate-800 p-2 flex-shrink-0">
+                        <svg viewBox="0 0 100 100" class="w-full h-full">
+                            <use href="#${h.svgId}"></use>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="font-fredoka text-xl text-slate-800">${h.name}</h4>
+                        <p class="text-xs text-slate-600 mt-1 leading-relaxed">${h.desc}</p>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        let selectedScenario = null;
+
+        function initHazardGame() {
+            matchedScenarios = 0;
+            document.getElementById('hazard-matched-count').innerText = 0;
+            document.getElementById('hazard-total-count').innerText = SCENARIOS_DATA.length;
+
+            const scenarioContainer = document.getElementById('scenario-list');
+            scenarioContainer.innerHTML = '';
+
+            SCENARIOS_DATA.forEach(sc => {
+                const item = document.createElement('div');
+                item.id = `scenario-card-${sc.id}`;
+                item.onclick = () => selectScenarioCard(sc);
+                item.className = "p-4 rounded-2xl border-3 border-slate-800 bg-white shadow-cartoon-sm cursor-pointer transition-all flex items-center justify-between";
+                item.innerHTML = `
+                    <span class="font-medium text-sm text-slate-800">${sc.text}</span>
+                    <span id="sc-status-${sc.id}" class="text-xs font-extrabold uppercase px-2.5 py-1 rounded-full bg-slate-100 text-slate-500">Tap to Select</span>
+                `;
+                scenarioContainer.appendChild(item);
+            });
+
+            const dropContainer = document.getElementById('symbol-drop-list');
+            dropContainer.innerHTML = '';
+
+            // Render hazard choice buttons
+            HAZARD_DATA.slice(0, 8).forEach(h => {
+                const sym = document.createElement('div');
+                sym.onclick = () => tryMatchHazard(h.id);
+                sym.className = "bg-white p-3 rounded-2xl border-3 border-slate-800 shadow-cartoon-sm flex flex-col items-center cursor-pointer hover:bg-amber-50 transition-colors";
+                sym.innerHTML = `
+                    <div class="w-16 h-16">
+                        <svg viewBox="0 0 100 100" class="w-full h-full">
+                            <use href="#${h.svgId}"></use>
+                        </svg>
+                    </div>
+                    <span class="font-fredoka text-xs text-slate-700 mt-1 text-center">${h.name}</span>
+                `;
+                dropContainer.appendChild(sym);
+            });
+        }
+
+        function selectScenarioCard(sc) {
+            playSound('click');
+            selectedScenario = sc;
+            SCENARIOS_DATA.forEach(s => {
+                const el = document.getElementById(`scenario-card-${s.id}`);
+                const status = document.getElementById(`sc-status-${s.id}`);
+                if (status.innerText !== 'MATCHED') {
+                    if (s.id === sc.id) {
+                        el.className = "p-4 rounded-2xl border-3 border-amber-500 bg-amber-50 shadow-cartoon-sm cursor-pointer transition-all flex items-center justify-between";
+                        status.className = "text-xs font-extrabold uppercase px-2.5 py-1 rounded-full bg-amber-200 text-amber-800";
+                        status.innerText = "Selected";
+                    } else {
+                        el.className = "p-4 rounded-2xl border-3 border-slate-800 bg-white shadow-cartoon-sm cursor-pointer transition-all flex items-center justify-between";
+                        status.className = "text-xs font-extrabold uppercase px-2.5 py-1 rounded-full bg-slate-100 text-slate-500";
+                        status.innerText = "Tap to Select";
+                    }
+                }
+            });
+        }
+
+        function tryMatchHazard(hazardId) {
+            if (!selectedScenario) {
+                playSound('wrong');
+                return;
+            }
+
+            if (selectedScenario.correctHazard === hazardId) {
+                playSound('correct');
+                matchedScenarios++;
+                document.getElementById('hazard-matched-count').innerText = matchedScenarios;
+
+                const scCard = document.getElementById(`scenario-card-${selectedScenario.id}`);
+                const status = document.getElementById(`sc-status-${selectedScenario.id}`);
+                scCard.className = "p-4 rounded-2xl border-3 border-emerald-500 bg-emerald-50 opacity-80 pointer-events-none flex items-center justify-between";
+                status.className = "text-xs font-extrabold uppercase px-2.5 py-1 rounded-full bg-emerald-200 text-emerald-800";
+                status.innerText = "MATCHED";
+
+                selectedScenario = null;
+                addStars(10);
+
+                if (matchedScenarios === SCENARIOS_DATA.length) {
+                    playSound('win');
+                    triggerConfetti();
+                }
+            } else {
+                playSound('wrong');
+            }
+        }
+
+        /* --- MODE 3: MATCHING RUSH GAME LOGIC --- */
+        function startRushGame() {
+            playSound('click');
+            rushTimeLeft = 30;
+            rushScore = 0;
+            rushStreak = 0;
+
+            document.getElementById('rush-timer').innerText = `${rushTimeLeft}s`;
+            document.getElementById('rush-score').innerText = rushScore;
+            document.getElementById('rush-streak').innerText = `${rushStreak} 🔥`;
+
+            document.getElementById('rush-start-overlay').classList.add('hidden');
+            document.getElementById('rush-over-overlay').classList.add('hidden');
+            document.getElementById('rush-active-game').classList.remove('hidden');
+
+            loadNextRushQuestion();
+
+            clearInterval(rushTimer);
+            rushTimer = setInterval(() => {
+                rushTimeLeft--;
+                document.getElementById('rush-timer').innerText = `${rushTimeLeft}s`;
+                if (rushTimeLeft <= 0) {
+                    clearInterval(rushTimer);
+                    endRushGame();
+                }
+            }, 1000);
+        }
+
+        function loadNextRushQuestion() {
+            const randomItem = APPARATUS_DATA[Math.floor(Math.random() * APPARATUS_DATA.length)];
+            currentRushItem = randomItem;
+
+            document.getElementById('rush-icon-container').innerHTML = `
+                <svg viewBox="0 0 100 100" class="w-full h-full">
+                    <use href="#${randomItem.svgId}"></use>
+                </svg>
+            `;
+
+            // Prepare choices
+            const correctChoice = randomItem.name;
+            const wrongChoices = APPARATUS_DATA.filter(i => i.id !== randomItem.id)
+                .sort(() => 0.5 - Math.random())
+                .slice(0, 3)
+                .map(i => i.name);
+
+            const options = [correctChoice, ...wrongChoices].sort(() => 0.5 - Math.random());
+
+            const optionsContainer = document.getElementById('rush-options-grid');
+            optionsContainer.innerHTML = '';
+
+            options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.onclick = () => checkRushAnswer(opt, btn);
+                btn.className = "btn-cartoon bg-white hover:bg-purple-50 text-slate-800 font-fredoka text-lg p-4 rounded-2xl border-3 border-slate-800 shadow-cartoon-sm text-center";
+                btn.innerText = opt;
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function checkRushAnswer(selectedName, btnEl) {
+            if (selectedName === currentRushItem.name) {
+                playSound('correct');
+                rushStreak++;
+                rushScore += 100 * rushStreak;
+                addStars(2);
+
+                btnEl.className = "btn-cartoon bg-emerald-400 text-slate-900 font-fredoka text-lg p-4 rounded-2xl border-3 border-slate-800 shadow-cartoon-sm text-center";
+            } else {
+                playSound('wrong');
+                rushStreak = 0;
+                btnEl.className = "btn-cartoon bg-rose-400 text-white font-fredoka text-lg p-4 rounded-2xl border-3 border-slate-800 shadow-cartoon-sm text-center";
+            }
+
+            document.getElementById('rush-score').innerText = rushScore;
+            document.getElementById('rush-streak').innerText = `${rushStreak} 🔥`;
+
+            setTimeout(() => {
+                if (rushTimeLeft > 0) loadNextRushQuestion();
+            }, 300);
+        }
+
+        function endRushGame() {
+            playSound('win');
+            document.getElementById('rush-active-game').classList.add('hidden');
+            document.getElementById('rush-over-overlay').classList.remove('hidden');
+            document.getElementById('rush-final-score').innerText = rushScore;
+
+            if (rushScore > 500) triggerConfetti();
+        }
+
+        /* --- MODE 4: SAFETY INSPECTOR LOGIC --- */
+        function inspectHazard(hazardIndex) {
+            const h = SPOT_HAZARDS[hazardIndex];
+            const spotIcon = document.getElementById(`spot-icon-${hazardIndex}`);
+            const feedbackBox = document.getElementById('inspector-feedback');
+
+            if (!resolvedHazards.has(hazardIndex)) {
+                playSound('correct');
+                resolvedHazards.add(hazardIndex);
+                addStars(15);
+
+                spotIcon.innerText = h.resolvedIcon;
+                spotIcon.className = "text-2xl md:text-3xl text-emerald-600 font-bold";
+
+                document.getElementById('hazards-found-count').innerText = resolvedHazards.size;
+
+                feedbackBox.className = "mt-4 p-4 rounded-2xl bg-emerald-100 border-2 border-emerald-400 text-emerald-900 flex items-center gap-3 animate-in fade-in";
+                feedbackBox.innerHTML = `
+                    <i class="fa-solid fa-circle-check text-emerald-600 text-xl"></i>
+                    <div>
+                        <strong class="font-fredoka text-base">${h.title} Fixed!</strong>
+                        <p class="text-sm mt-0.5">${h.fixText}</p>
+                    </div>
+                `;
+
+                if (resolvedHazards.size === SPOT_HAZARDS.length) {
+                    playSound('win');
+                    triggerConfetti();
+                }
+            } else {
+                playSound('click');
+            }
+        }
+
+        /* --- CERTIFICATE & BADGES SYSTEM --- */
+        const BADGES = [
+            { id: 'app_master', name: 'Apparatus Master', icon: '🧪', desc: 'Explored lab tools' },
+            { id: 'safety_hero', name: 'Safety Officer', icon: '⚠️', desc: 'Matched safety labels' },
+            { id: 'rush_champ', name: 'Rush Champion', icon: '⚡', desc: 'Scored in Gear Rush' },
+            { id: 'lab_inspector', name: 'Eagle Eye Inspector', icon: '🔍', desc: 'Fixed lab hazards' }
+        ];
+
+        function updateBadgesUI() {
+            const container = document.getElementById('badges-container');
+            container.innerHTML = '';
+
+            const isAppUnlocked = exploredSet.size >= 5;
+            const isSafetyUnlocked = matchedScenarios >= 4;
+            const isRushUnlocked = rushScore >= 300;
+            const isInspectorUnlocked = resolvedHazards.size >= 4;
+
+            const unlockMap = {
+                'app_master': isAppUnlocked,
+                'safety_hero': isSafetyUnlocked,
+                'rush_champ': isRushUnlocked,
+                'lab_inspector': isInspectorUnlocked
+            };
+
+            BADGES.forEach(b => {
+                const unlocked = unlockMap[b.id];
+                const card = document.createElement('div');
+                card.className = `p-4 rounded-2xl border-3 border-slate-800 text-center flex flex-col items-center justify-center ${unlocked ? 'bg-amber-100' : 'bg-slate-100 opacity-50'}`;
+                card.innerHTML = `
+                    <div class="text-3xl mb-1">${b.icon}</div>
+                    <div class="font-fredoka text-sm text-slate-800">${b.name}</div>
+                    <div class="text-[10px] text-slate-600 mt-0.5">${b.desc}</div>
+                    <span class="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded-full mt-2 border ${unlocked ? 'bg-emerald-200 text-emerald-800 border-emerald-400' : 'bg-slate-200 text-slate-500 border-slate-300'}">
+                        ${unlocked ? 'Unlocked' : 'Locked'}
+                    </span>
+                `;
+                container.appendChild(card);
+            });
+
+            // Update Cert Name Binding
+            const input = document.getElementById('student-name-input');
+            const printDisplay = document.getElementById('print-name-display');
+            input.oninput = (e) => {
+                printDisplay.innerText = e.target.value || 'Alex Spark';
+            };
+        }
+
+        function printCertificate() {
+            playSound('click');
+            window.print();
+        }
+
+        /* --- CONFETTI ANIMATION ENGINE --- */
+        function triggerConfetti() {
+            const canvas = document.getElementById('confetti-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const particles = [];
+            const colors = ['#f43f5e', '#8b5cf6', '#06b6d4', '#10b981', '#f59e0b'];
+
+            for (let i = 0; i < 100; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: -20,
+                    size: Math.random() * 8 + 4,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    vy: Math.random() * 4 + 2,
+                    vx: (Math.random() - 0.5) * 3,
+                    rotation: Math.random() * 360
+                });
+            }
+
+            let frame = 0;
+            function render() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => {
+                    p.y += p.vy;
+                    p.x += p.vx;
+                    p.rotation += 2;
+                    ctx.save();
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate((p.rotation * Math.PI) / 180);
+                    ctx.fillStyle = p.color;
+                    ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+                    ctx.restore();
+                });
+
+                frame++;
+                if (frame < 180) {
+                    requestAnimationFrame(render);
+                } else {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                }
+            }
+            render();
+        }
+
+        /* Initialization On Load */
+        window.onload = function() {
+            renderApparatusGrid();
+            renderHazardCards();
+            document.getElementById('cert-date').innerText = new Date().toISOString().split('T')[0];
+        };
+    </script>
+</body>
+</html>
